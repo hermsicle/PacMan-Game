@@ -1,6 +1,13 @@
 # Pacman
+Welcome to my version of the game Pacman!
 
-This is a simple version of the game pacman.
+## Technologies Used
+<ol>
+<li>HTML5</li>
+<li>CSS</li>
+<li>Javascript</li>
+</ol>
+<hr>
 
 ## How To Play
 
