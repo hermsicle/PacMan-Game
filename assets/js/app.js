@@ -188,9 +188,9 @@ class Ghost {
 
 const ghosts = [
     new Ghost('blinky', 348, 250),
-    new Ghost('pinky', 376, 400),
-    new Ghost('inky', 351, 300),
-    new Ghost('clyde', 379, 500)
+    new Ghost('pinky', 376, 300),
+    new Ghost('inky', 351, 200),
+    new Ghost('clyde', 379, 100)
 ]
 
 //Render the ghosts using forEach() into the DOM by referencing to the class 
@@ -207,7 +207,7 @@ const moveGhost = ghost => {
     ghost.timerId = setInterval( () => {
         if (
             !squares[ghost.currentIndex + direction].classList.contains('wall') &&
-            !squares[ghost.currentIndex + direction].classList.contains('ghost')
+            !squares[ghost.currentIndex + direction].classList.contains('ghost') 
         ){
             //Remove all ghost classes
             squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
@@ -241,7 +241,7 @@ const moveGhost = ghost => {
             squares[ghost.currentIndex].classList.add('ghost')
         }
         checkForGameOver();
-    }, 250)
+    }, ghost.speed)
 }
 
 ghosts.forEach( ghost => moveGhost(ghost))
@@ -259,7 +259,7 @@ const checkForGameOver = () => {
         //Remove event listener 
         document.removeEventListener('keyup', control)
         //Alert User
-        alert('You have lost!')
+        scoreDisplay.innerHTML = 'You Have Lost'
     }
 }
 
@@ -268,6 +268,6 @@ const checkForWin = () => {
     if(score === 274) {
         ghosts.forEach( ghost => clearInterval(ghost.timerId))
         document.removeEventListener('keyup', control)
-        alert('You have won!!')
+        scoreDisplay.innerHTML = 'You Have Won'
     }
 }

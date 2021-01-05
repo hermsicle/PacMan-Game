@@ -4,6 +4,7 @@
 }
 body {
     background-color: black;
+    font-family: 'Press Start 2P', cursive;
 }
 h1,
 h3 {
@@ -31,29 +32,47 @@ h3 {
     background-color: blue;
 }
 .power-pellet {
-    background-color: rgb(121, 129, 0);
-    border-radius: 7.5px;
+    /* background-color: rgb(121, 129, 0);
+    border-radius: 7.5px; */
+    background-image: url('../images/power-pellet.png');
+    background-position: center;
+    background-size: contain;
 }
 .pacman {
-    background-color: rgb(255, 255, 6);
-    border-radius: 7.5px;
+    background-image: url('../images/pacman.png');
+    background-position: center;
+    background-size: contain;
 }
-.blinky {
-    background-color: red;
+.blinky { 
+    /* Red */
+    background-image: url('../images/blinky.png');
+    background-position: center;
+    background-size: contain;
     border: none;
 }
 .pinky {
-    background-color: pink;
+    /* Pink */
+    background-image: url('../images/pinky.png');
+    background-position: center;
+    background-size: contain;
     border: none;
 }
 .inky {
-    background-color: aquamarine;
+    /* Blue */
+    background-image: url('../images/inky.png');
+    background-position: center;
+    background-size: contain;
     border: none;
 }
 .clyde {
-    background-color: orange;
+    /* Orange */
+    background-image: url('../images/clyde.png');
+    background-position: center;
+    background-size: contain;
     border: none;
 }
 .scared-ghost {
-    background-color: aqua;
+    background-image: url('../images/scared-ghost.png');
+    background-position: center;
+    background-size: contain;
 }
