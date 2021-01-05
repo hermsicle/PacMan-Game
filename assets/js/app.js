@@ -221,6 +221,9 @@ const moveGhost = ghost => {
             direction = directions[Math.floor(Math.random() * directions.length)];
         }
 
+        //Condition to check if ghost is on pac-dots or power-pellet
+
+
         //Condition to check if ghost is scared
         if(ghost.isScared) {
             squares[ghost.currentIndex].classList.add('scared-ghost')
