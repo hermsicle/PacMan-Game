@@ -13,6 +13,8 @@ let score = 0;
 3 = power pellet
 4 = empty
 */
+//Total pac-dots + power-pellets = 274
+
 const layout = [
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -130,6 +132,7 @@ const control = e => {
     }
     squares[pacmanCurrentIndex].classList.add('pacman')
     pacDotEaten();
+    eatPowerPellet();
 }
 
 //Move pacman with keyup
@@ -146,6 +149,27 @@ const pacDotEaten = () => {
     //remove classList pacdot
         squares[pacmanCurrentIndex].classList.remove('pac-dots')
     }
+}
+
+//Function to eatPowerPellet
+const eatPowerPellet = () => {
+    //Check if square pacman contains power pellet
+    if(squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+        //Remove the power pellet
+        squares[pacmanCurrentIndex].classList.remove('power-pellet')    
+        //Add score of 10
+        score += 10
+        //Change ghost to isScared
+        //Use settimeout to unscare ghost in 10 seconds 
+        ghosts.forEach( ghost => {
+            ghost.isScared = true
+        })
+        setTimeout(unScareGhost, 10000)
+    }
+}
+
+const unScareGhost = () => {
+    ghosts.forEach( ghost => ghost.isScared = true)
 }
 
 //Create a Class of Ghost 
@@ -177,20 +201,27 @@ ghosts.forEach( ghost => {
 const moveGhost = ghost => {
     const directions = [-1, +1, +width, -width];
     let direction = directions[Math.floor(Math.random() * directions.length)]
+
     ghost.timerId = setInterval( () => {
-        //Remove any ghost class
         if (
             !squares[ghost.currentIndex + direction].classList.contains('wall') &&
             !squares[ghost.currentIndex + direction].classList.contains('ghost')
         ){
+            //Remove all ghost classes
+            squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
             squares[ghost.currentIndex].classList.remove(ghost.className)
-            //Add direction to currentIndex
+            //Set CurrentIndex to += direction 
             ghost.currentIndex += direction;
-    
-            //Add back ghost class
+            //Add back ghost classes 
             squares[ghost.currentIndex].classList.add(ghost.className)
+            squares[ghost.currentIndex].classList.add('ghost')
         } else {
             direction = directions[Math.floor(Math.random() * directions.length)];
+        }
+
+        //Condition to check if ghost is scared
+        if(ghost.isScared) {
+            squares[ghost.currentIndex].classList.add('scared-ghost')
         }
     }, 250)
 }
