@@ -6,6 +6,11 @@ body {
     background-color: black;
     font-family: 'Press Start 2P', cursive;
 }
+.game-div {
+    background: url(../images/background-img.png);
+    background-position: center;
+    background-size: contain;
+}
 .title {
     display: flex;
     flex-direction: column;
@@ -26,6 +31,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     background-color: black;
+
 }
 .grid div {
     height: 15px;
