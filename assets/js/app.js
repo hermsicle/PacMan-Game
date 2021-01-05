@@ -1,4 +1,4 @@
-const scoreDisplay = document.getElementById('score');
+const scoreDisplay = document.getElementById('scoreDisplay');
 const grid = document.querySelector('.grid');
 
 //Array of divs to be generated in our createGrid();
@@ -58,13 +58,14 @@ const createGrid = () => {
         if(layout[i] === 0) {
             squares[i].classList.add('pac-dots')
         }
-        if(layout[i] === 1) {
+        else if(layout[i] === 1) {
             squares[i].classList.add('wall')
         }
-        if(layout[i] === 2) {
+        else if(layout[i] === 2) {
             squares[i].classList.add('ghost-lair')
+
         }
-        if(layout[i] === 3) {
+        else if(layout[i] === 3) {
             squares[i].classList.add('power-pellet')
         }
     }
@@ -81,8 +82,10 @@ const control = e => {
     switch(e.keyCode) {
         case 40:
             console.log('down pressed')
+            //Disable from going down to ghost lair
             //Check if the surrounding area is a wall and edge
             if(
+                !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
                 pacmanCurrentIndex + width < width * width &&
                 !squares[pacmanCurrentIndex + width].classList.contains('wall')
                 ) {
@@ -106,18 +109,41 @@ const control = e => {
             ) {
                 pacmanCurrentIndex -= 1;
             }
+            if(pacmanCurrentIndex === 364) {
+                console.log('left wall hit')
+                pacmanCurrentIndex = 391;
+            }
             break
         case 39:
             console.log('right pressed')
             if(
                 pacmanCurrentIndex % width < width &&
-                !squares[pacmanCurrentIndex].classList.contains('wall')
+                !squares[pacmanCurrentIndex + 1].classList.contains('wall')
             ) {
                 pacmanCurrentIndex += 1;
             }
+            if(pacmanCurrentIndex === 391) {
+                console.log('right wall hit')
+                pacmanCurrentIndex = 364;
+            }
+            break
     }
     squares[pacmanCurrentIndex].classList.add('pacman')
+    pacDotEaten();
 }
 
 //Move pacman with keyup
 document.addEventListener('keyup' , control)
+
+//Function to pelletEaten
+const pacDotEaten = () => {
+    //Checks if our pacman is on a pacdot
+    if(squares[pacmanCurrentIndex].classList.contains('pac-dots')) {
+    //Increment score
+        score++;
+    //Change score in dom
+        scoreDisplay.innerHTML = score;
+    //remove classList pacdot
+        squares[pacmanCurrentIndex].classList.remove('pac-dots')
+    }
+}
