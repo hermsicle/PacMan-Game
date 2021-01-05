@@ -133,6 +133,8 @@ const control = e => {
     squares[pacmanCurrentIndex].classList.add('pacman')
     pacDotEaten();
     eatPowerPellet();
+    checkForGameOver();
+    checkForWin();
 }
 
 //Move pacman with keyup
@@ -169,7 +171,7 @@ const eatPowerPellet = () => {
 }
 
 const unScareGhost = () => {
-    ghosts.forEach( ghost => ghost.isScared = true)
+    ghosts.forEach( ghost => ghost.isScared = false)
 }
 
 //Create a Class of Ghost 
@@ -223,7 +225,49 @@ const moveGhost = ghost => {
         if(ghost.isScared) {
             squares[ghost.currentIndex].classList.add('scared-ghost')
         }
+
+        //Check if pacman is on scared Ghost
+        if(
+            squares[pacmanCurrentIndex].classList.contains('ghost') &&
+            ghost.isScared
+        ) {
+            //Remove classnames
+            squares[ghost.currentIndex].classList.remove('scared-ghost', 'ghost', ghost.className)
+            //Change ghost current index back to the start index
+            ghost.currentIndex = ghost.startIndex
+            //add a score of 100
+            score += 100
+            //re-add the classback to the ghost
+            squares[ghost.currentIndex].classList.add('ghost')
+        }
+        checkForGameOver();
     }, 250)
 }
 
 ghosts.forEach( ghost => moveGhost(ghost))
+
+//Define a gameover function 
+const checkForGameOver = () => {
+    //Conditon to check if our ghost and pacman collides
+    if(
+        squares[pacmanCurrentIndex].classList.contains('ghost') &&
+        !squares[pacmanCurrentIndex].classList.contains('scared-ghost')
+    ) {
+        squares[pacmanCurrentIndex].classList.remove('pacman')
+        //for each ghost, stop it from moving
+        ghosts.forEach( ghost => clearInterval(ghost.timerId))
+        //Remove event listener 
+        document.removeEventListener('keyup', control)
+        //Alert User
+        alert('You have lost!')
+    }
+}
+
+//Define a win game function
+const checkForWin = () => {
+    if(score === 274) {
+        ghosts.forEach( ghost => clearInterval(ghost.timerId))
+        document.removeEventListener('keyup', control)
+        alert('You have won!!')
+    }
+}
