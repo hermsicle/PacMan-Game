@@ -26,19 +26,31 @@ h3 {
 .pac-dots {
     background-color: rgb(208, 255, 0);
     border: 5px solid black;
-    box-sizing: border-box;
 }
 .wall {
     background-color: blue;
-    box-sizing: border-box;
 }
 .power-pellet {
     background-color: rgb(121, 129, 0);
     border-radius: 7.5px;
-    box-sizing: border-box;
 }
 .pacman {
     background-color: rgb(255, 255, 6);
     border-radius: 7.5px;
-    box-sizing: border-box;
+}
+.blinky {
+    background-color: red;
+    border: none;
+}
+.pinky {
+    background-color: pink;
+    border: none;
+}
+.inky {
+    background-color: aquamarine;
+    border: none;
+}
+.clyde {
+    background-color: orange;
+    border: none;
 }

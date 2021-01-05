@@ -147,3 +147,52 @@ const pacDotEaten = () => {
         squares[pacmanCurrentIndex].classList.remove('pac-dots')
     }
 }
+
+//Create a Class of Ghost 
+class Ghost {
+    constructor(className, startIndex, speed) {
+        this.className = className
+        this.startIndex = startIndex
+        this.speed = speed
+        this.currentIndex = startIndex
+        this.timerId = NaN
+        this.isScared = false
+    }
+}
+
+const ghosts = [
+    new Ghost('blinky', 348, 250),
+    new Ghost('pinky', 376, 400),
+    new Ghost('inky', 351, 300),
+    new Ghost('clyde', 379, 500)
+]
+
+//Render the ghosts using forEach() into the DOM by referencing to the class 
+ghosts.forEach( ghost => {
+    squares[ghost.currentIndex].classList.add(ghost.className)
+    squares[ghost.currentIndex].classList.add('ghost')
+});
+
+//Create a function that will move the ghosts
+const moveGhost = ghost => {
+    const directions = [-1, +1, +width, -width];
+    let direction = directions[Math.floor(Math.random() * directions.length)]
+    ghost.timerId = setInterval( () => {
+        //Remove any ghost class
+        if (
+            !squares[ghost.currentIndex + direction].classList.contains('wall') &&
+            !squares[ghost.currentIndex + direction].classList.contains('ghost')
+        ){
+            squares[ghost.currentIndex].classList.remove(ghost.className)
+            //Add direction to currentIndex
+            ghost.currentIndex += direction;
+    
+            //Add back ghost class
+            squares[ghost.currentIndex].classList.add(ghost.className)
+        } else {
+            direction = directions[Math.floor(Math.random() * directions.length)];
+        }
+    }, 250)
+}
+
+ghosts.forEach( ghost => moveGhost(ghost))
